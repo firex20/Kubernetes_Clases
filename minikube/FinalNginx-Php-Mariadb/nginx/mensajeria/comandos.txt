@@ -1,0 +1,5 @@
+kubectl create configmap nginx-config --from-file=default.conf
+export KUBE_EDITOR="nano"
+kubectl edit configmap nginx-config
+minikube start --memory=8192 --cpus=8 --disk-size=20g --driver=kvm2
+minikube mount /home/pedro/Escritorio/CosasClases/2ºASIR/SER/Kubernetes/minikube/FinalNginx-Php-Mariadb/nginx/mensajeria/build:/web-data

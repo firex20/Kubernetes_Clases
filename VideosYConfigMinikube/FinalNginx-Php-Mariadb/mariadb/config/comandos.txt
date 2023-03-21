@@ -1,0 +1,3 @@
+kubectl create configmap mariadb-config --from-file=mensajeria.sql
+export KUBE_EDITOR="nano"
+kubectl edit configmap mariadb-config

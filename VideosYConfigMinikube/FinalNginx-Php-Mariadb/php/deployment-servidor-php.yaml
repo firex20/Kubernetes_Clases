@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-php
+  labels:
+    app: php
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php
+  template:
+    metadata:
+      name: pod-servidor-php
+      labels:
+        app: php
+        service: web
+    spec:
+      containers:
+      - image: bitnami/php-fpm
+        name: contenedor-servidor-php
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
+        ports:
+        - name: php
+          containerPort: 9000
+        volumeMounts:
+        - name: web-dir
+          mountPath: /app
+      volumes:
+      - name: web-dir
+        hostPath:
+          path: /web-data

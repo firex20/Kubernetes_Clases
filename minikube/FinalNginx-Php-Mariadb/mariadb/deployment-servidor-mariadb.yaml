@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-mariadb
+  labels:
+    app: mariadb
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      name: pod-servidor-mariadb
+      labels:
+        app: mariadb
+        service: web
+    spec:
+      containers:
+      - image: mariadb
+        name: contenedor-servidor-mariadb
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: admin
+        ports:
+        - name: mariadb
+          containerPort: 3306
+        volumeMounts:
+        - name: sql-script
+          mountPath: /docker-entrypoint-initdb.d/mensajeria.sql
+          subPath: mensajeria.sql
+      volumes:
+      - name: sql-script
+        configMap:
+          name: mariadb-config

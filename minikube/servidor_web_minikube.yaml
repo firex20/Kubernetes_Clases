@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-servidor-web
+  labels:
+    app: nginx
+    service: web
+spec:
+  containers:
+    - image: firex20/pagina_web
+      name: contenedor-servidor-web

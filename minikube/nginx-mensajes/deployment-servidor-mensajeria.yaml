@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-mensajeria
+  labels:
+    app: mensajeria
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mensajeria
+  template:
+    metadata:
+      name: pod-servidor-mensajeria
+      labels:
+        app: mensajeria
+        service: web
+    spec:
+      containers:
+      - image: firex20/nginx-mensajeria_2
+        name: contenedor-servidor-mensajeria
+        ports:
+        - name: http
+          containerPort: 80

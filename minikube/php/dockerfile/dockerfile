@@ -1,0 +1,6 @@
+FROM webdevops/php-apache
+COPY index.php /app/.
+ADD php /app/php/.
+COPY ports.conf /etc/apache2/ports.conf
+COPY vhost.conf /opt/docker/etc/httpd/vhost.conf
+EXPOSE 8080

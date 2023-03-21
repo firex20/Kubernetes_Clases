@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-mariadb-test
+  labels:
+    app: mariadb-test
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb-test
+  template:
+    metadata:
+      name: pod-servidor-mariadb-test
+      labels:
+        app: mariadb-test
+        service: database
+    spec:
+      containers:
+      - image: mariadb
+        name: contenedor-servidor-mariadb-test
+        ports:
+        - name: mariadb
+          containerPort: 3306
+        env:
+          - name: MARIADB_ROOT_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: mariadb
+                key: root_password

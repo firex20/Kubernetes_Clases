@@ -1,0 +1,2 @@
+FROM firex20/pagina_espana
+CMD service nginx restart && tail -f /dev/null

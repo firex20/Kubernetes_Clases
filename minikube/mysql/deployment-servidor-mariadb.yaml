@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-mariadb
+  labels:
+    app: mariadb
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      name: pod-servidor-mariadb
+      labels:
+        app: mariadb
+        service: web
+    spec:
+      containers:
+      - image: firex20/mysql
+        name: contenedor-servidor-mariadb
+        ports:
+        - name: mariadb
+          containerPort: 3306

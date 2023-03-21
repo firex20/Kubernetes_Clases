@@ -1,0 +1,4 @@
+FROM bitnami/php-fpm
+EXPOSE 9000
+ADD php /app/php
+COPY index.php /app/.

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-web
+  labels:
+    app: nginx
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: pod-servidor-web
+      labels:
+        app: nginx
+        service: web
+    spec:
+      containers:
+      - image: firex20/pagina_web:unsecured
+        name: contenedor-servidor-web
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        volumeMounts:
+          - name: es-web
+            mountPath: /usr/share/nginx/html
+          - name: en-web
+            mountPath: /var/www/html/en
+      volumes:
+        - name: es-web
+          hostPath:
+            path: /home/pedro/Escritorio/CosasClases/2ºASIR/SER/PaginaWeb/paginasusana
+        - name: en-web
+          hostPath:
+            path: /home/pedro/Escritorio/CosasClases/2ºASIR/SER/PaginaWeb/paginasusana_en

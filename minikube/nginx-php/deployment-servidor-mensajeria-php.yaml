@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-servidor-mensajeria-php
+  labels:
+    app: mensajeria-php
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mensajeria-php
+  template:
+    metadata:
+      name: pod-servidor-mensajeria-php
+      labels:
+        app: mensajeria-php
+        service: web
+    spec:
+      containers:
+      - image: firex20/nginx-mensajeria
+        name: contenedor-servidor-mensajeria-php
+        ports:
+        - name: http
+          containerPort: 80
+      - image: firex20/php-server
+        name: contenedor-servidor-php
+        ports:
+        - name: php
+          containerPort: 8080
